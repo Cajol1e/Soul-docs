@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>欢迎来到Soul的文档 &mdash; soul-docs v0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2fea6348"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="基本概念" href="concepts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            soul-docs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">从一个例子开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="params.html">参数设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neuron.html">神经元</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoding.html">编码方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets/index.html">数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gradient.html">梯度代理函数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/index.html">模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">度量工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app/index.html">APP</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">soul-docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">欢迎来到Soul的文档</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="soul">
+<h1>欢迎来到Soul的文档<a class="headerlink" href="#soul" title="Link to this heading"></a></h1>
+<p>本教程作者： <a class="reference external" href="https://github.com/cajol1e">Tecl Cajol1e</a></p>
+<p><a class="reference external" href="https://github.com/yudi-mars/Soul">Soul</a> 是一个基于Python和 <a class="reference external" href="https://pytorch.org/">PyTorch</a> 的开源工具包，
+用于构建脉冲神经网络（SNN）应用程序。它提供了一个统一、高效的框架，既适用于研究，也适用于边缘部署，使您能够以最小的
+开销重现受大脑启发的计算算法并开发新模型。借助SOUL（基于SNN的开源工具包），您可以在一个综合环境中无缝地试验SNN，该
+环境将学术探索与现实世界的边缘智能紧密结合。</p>
+<section id="id2">
+<h2>安装<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>注意，Soul是基于PyTorch的，需要确保环境中已经安装了PyTorch，才能安装Soul。
+您可以从源代码安装最新版本：
+通过 <a class="reference external" href="https://github.com/yudi-mars/Soul">GitHub</a> ：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/yudi-mars/Soul.git
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>基本教程<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">基本概念</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#id2">脉冲神经网络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#id3">神经元</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#id4">梯度代理函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#id5">编码方式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#id6">数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">从一个例子开始</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#id2">环境准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#id3">训练准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#id4">模型训练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#id5">数据测量</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="params.html">参数设置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="params.html#soul-utils-parser-parse-args">soul.utils.parser.parse_args方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="params.html#soul-config-basic-yaml">soul.config.basic.yaml基础配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="params.html#soul-config-model-application-yaml">soul.config.model.application.*.yaml模型配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="params.html#soul-config-neuron-yaml">soul.config.neuron.*.yaml神经元配置</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="neuron.html">神经元</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#lifnode">LIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#parametriclifnode">ParametricLIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#clifnode">CLIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#gatedlifnode">GatedLIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#intlifnode">INTLIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#parallelspikingnode">ParallelSpikingNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#tlifnode">TLIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#ielifnode">IELIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#ltmd">LTMD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#stbif">STBIF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#ilifneuron">ILIFNeuron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="neuron.html#rplifnode">RPLIFNode</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="encoding.html">编码方式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#binary-parallel">binary_parallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#binary-sequential">binary_sequential</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#bsa">bsa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#burst">burst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#direct">direct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#phase">phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#poisson">poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#population">population</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#rank-order">rank_order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#temporal">temporal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#rate">rate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#sdr">sdr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#tcr-mw">tcr_mw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#tcr-sf">tcr_sf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="encoding.html#tcr-tbr">tcr_tbr</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datasets/index.html">数据集</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="datasets/acoustic.html">Acoustic 数据集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/motion.html">Motion 数据集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/vision.html">Vision 数据集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/wireless.html">Wireless 数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gradient.html">梯度代理函数</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#atan">atan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#erf">erf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#sigmoid">sigmoid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#rectangle">rectangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#fastsigmoid">fastsigmoid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#qpseudospike">qpseudospike</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#softsign">softsign</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#quandratic">quandratic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#exp">exp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#superspike">superspike</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#ternary">ternary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#quant">quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient.html#quant4">quant4</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/index.html">模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models/acoustic.html">Acoustic 模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/motion.html">Motion 模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/vision.html">Vision 模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/wireless.html">Wireless 模型</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">度量工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#accuracy-py">accuracy.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#num-params-py">num_params.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#sops-py">sops.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#power-energy-py">power_energy.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="app/index.html">APP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app/lightweight.html">轻量化</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="id4">
+<h2>常见问题<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="concepts.html" class="btn btn-neutral float-right" title="基本概念" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Tecl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

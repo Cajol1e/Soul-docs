@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>神经元 &mdash; soul-docs v0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2fea6348"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="编码方式" href="encoding.html" />
+    <link rel="prev" title="参数设置" href="params.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            soul-docs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">从一个例子开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="params.html">参数设置</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">神经元</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lifnode">LIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parametriclifnode">ParametricLIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clifnode">CLIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gatedlifnode">GatedLIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#intlifnode">INTLIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parallelspikingnode">ParallelSpikingNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tlifnode">TLIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ielifnode">IELIFNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ltmd">LTMD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stbif">STBIF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ilifneuron">ILIFNeuron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rplifnode">RPLIFNode</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="encoding.html">编码方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets/index.html">数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gradient.html">梯度代理函数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/index.html">模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">度量工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app/index.html">APP</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">soul-docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">神经元</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/neuron.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>神经元<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>脉冲神经网络（SNN）的神经元是网络信息处理与传递的核心单元，其本质是模拟生物神经元的时空动力学特性——通过接收、整合输入信号，
+在满足特定条件时发放脉冲（Spike），并将脉冲信号传递至下游神经元，实现基于时间编码的信息表征与计算，这与传统人工神经网络（ANN）中连续值神经元有本质区别。
+接下来，我们将分别了解Soul中不同的神经元，以及如何使用、调整它们。</p>
+<section id="lifnode">
+<h2>LIFNode<a class="headerlink" href="#lifnode" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的 leaky integrate-and-fire（LIF，泄漏积分 - 发放）神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Wei Fang et al., “SpikingJelly: An open-source machine learning infrastructure platform for spike-based intelligence”, Science Advances’2023. <a class="reference external" href="https://github.com/fangwei123456/spikingjelly">https://github.com/fangwei123456/spikingjelly</a></p>
+</dd>
+</dl>
+<p>配置：
+* v_threshold：神经元的发放阈值
+* surrogate：反向传播的替代函数
+* tau：膜时间常数
+* decay_input：是否采用衰减输入
+* v_reset：膜电位的重置值
+* detach_reset：是否将重置操作从计算图中分离
+* store_v_seq：是否存储膜电位序列</p>
+</section>
+<section id="parametriclifnode">
+<h2>ParametricLIFNode<a class="headerlink" href="#parametriclifnode" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的泄漏积分 - 发放（LIF）变体神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Wei Fang et al., “Incorporating Learnable Membrane Time Constant to Enhance Learning of Spiking Neural Networks”, ICCV’2021. <a class="reference external" href="https://github.com/fangwei123456/Parametric-Leaky-Integrate-and-Fire-Spiking-Neuron">https://github.com/fangwei123456/Parametric-Leaky-Integrate-and-Fire-Spiking-Neuron</a></p>
+</dd>
+</dl>
+<p>配置：
+* v_threshold：神经元的发放阈值
+* surrogate：反向传播的替代函数
+* init_tau：膜时间常数的初始值
+* decay_input：是否采用衰减输入
+* v_reset：膜电位的重置值
+* detach_reset：是否将重置操作从计算图中分离
+* store_v_seq：是否存储膜电位序列</p>
+</section>
+<section id="clifnode">
+<h2>CLIFNode<a class="headerlink" href="#clifnode" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的泄漏积分 - 发放（LIF）变体神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Yulong Huang et al., “CLIF: Complementary Leaky Integrate-and-Fire Neuron for Spiking Neural Networks”, ICML’2024. <a class="reference external" href="https://github.com/HuuYuLong/Complementary-LIF">https://github.com/HuuYuLong/Complementary-LIF</a></p>
+</dd>
+</dl>
+<p>配置：
+* v_threshold：神经元的发放阈值
+* surrogate：反向传播的替代函数
+* tau：膜时间常数
+* decay_input：是否采用衰减输入
+* v_reset：膜电位的重置值
+* detach_reset：是否将重置操作从计算图中分离
+* store_v_seq：是否存储膜电位序列</p>
+</section>
+<section id="gatedlifnode">
+<h2>GatedLIFNode<a class="headerlink" href="#gatedlifnode" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的泄漏积分 - 发放（LIF）变体神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Xingting Yao et al., “GLIF: A Uniﬁed Gated Leaky Integrate-and-Fire Neuron for Spiking Neural Networks”, NeurIPS’2022. <a class="reference external" href="https://github.com/CAS-CLab/Gated-LIF">https://github.com/CAS-CLab/Gated-LIF</a></p>
+</dd>
+</dl>
+<p>配置：
+* v_threshold：神经元的发放阈值
+* surrogate：反向传播的替代函数
+* init_tau：膜时间常数的初始值
+* init_v_threshold：神经元发放阈值的初始值
+* init_conduct：电导的初始值
+* init_linear_decay：
+* init_v_subreset：</p>
+</section>
+<section id="intlifnode">
+<h2>INTLIFNode<a class="headerlink" href="#intlifnode" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的泄漏积分 - 发放（LIF）变体神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Zhenxin Lei et al., “Spike2former: Efficient spiking transformer for high-performance image segmentation”, AAAI’2025. <a class="reference external" href="https://github.com/BICLab/Spike2Former">https://github.com/BICLab/Spike2Former</a></p>
+</dd>
+</dl>
+<p>配置：
+* v_threshold：神经元的发放阈值
+* surrogate：反向传播的替代函数
+* v_reset：膜电位的重置值
+* detach_reset：是否将重置操作从计算图中分离</p>
+</section>
+<section id="parallelspikingnode">
+<h2>ParallelSpikingNode<a class="headerlink" href="#parallelspikingnode" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的泄漏积分 - 发放（LIF）变体神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Wei Fang et al., “Parallel Spiking Neurons with High Efficiency and Ability to Learn Long-term Dependencies”, NeurIPS’2023. <a class="reference external" href="https://github.com/fangwei123456/Parallel-Spiking-Neuron">https://github.com/fangwei123456/Parallel-Spiking-Neuron</a></p>
+</dd>
+</dl>
+<p>配置：
+* surrogate：反向传播的替代函数</p>
+</section>
+<section id="tlifnode">
+<h2>TLIFNode<a class="headerlink" href="#tlifnode" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的泄漏积分 - 发放（LIF）变体神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Yufei Guo et al., “Ternary spike: Learning ternary spikes for spiking neural networks”, AAAI’2024. <a class="reference external" href="https://github.com/yfguo91/Ternary-Spike">https://github.com/yfguo91/Ternary-Spike</a></p>
+</dd>
+</dl>
+<p>配置：
+* v_threshold：神经元的发放阈值
+* surrogate：反向传播的替代函数
+* v_reset：膜电位的重置值
+* detach_reset：是否将重置操作从计算图中分离</p>
+</section>
+<section id="ielifnode">
+<h2>IELIFNode<a class="headerlink" href="#ielifnode" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的泄漏积分 - 发放（LIF）变体神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Xuerui Qiu et al., “Quantized Spike-Driven Transformer”, ICLR’2025. <a class="reference external" href="https://github.com/bollossom/QSD-Transformer">https://github.com/bollossom/QSD-Transformer</a></p>
+</dd>
+</dl>
+<p>配置：
+* lens：位宽参数
+* surrogate：反向传播的替代函数</p>
+</section>
+<section id="ltmd">
+<h2>LTMD<a class="headerlink" href="#ltmd" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的泄漏积分 - 发放（LIF）变体神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Siqi Wang et al., “LTMD: Learning Improvement of Spiking Neural Networks with Learnable Thresholding Neurons and Moderate Dropout”, NeurIPS’2022. <a class="reference external" href="https://github.com/sq117/LTMD">https://github.com/sq117/LTMD</a></p>
+</dd>
+</dl>
+<p>配置：
+* steps：运行LTM-D模型的时间步长
+* kappa：LTM-D模型的kappa值</p>
+</section>
+<section id="stbif">
+<h2>STBIF<a class="headerlink" href="#stbif" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的泄漏积分 - 发放（LIF）变体神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Kang You et al., “VISTREAM: Improving Computation Efficiency of Visual Streaming Perception via Law-of-Charge-Conservation Inspired Spiking Neural Network”, CVPR’2025. <a class="reference external" href="https://github.com/Intelligent-Computing-Research-Group/ViStream">https://github.com/Intelligent-Computing-Research-Group/ViStream</a></p>
+</dd>
+</dl>
+<p>配置：
+* surrogate：反向传播的替代函数
+* q_threshold：量化阈值
+* level：量化等级</p>
+</section>
+<section id="ilifneuron">
+<h2>ILIFNeuron<a class="headerlink" href="#ilifneuron" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）的泄漏积分 - 发放（LIF）变体神经元实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Zhenxin Lei et al., “ILIF: Temporal Inhibitory Leaky Integrate-and-Fire Neuron for Overactivation in Spiking Neural Networks”, IJCAI’2025. <a class="reference external" href="https://github.com/kaisun1/ILIF">https://github.com/kaisun1/ILIF</a></p>
+</dd>
+</dl>
+<p>配置：
+* v_threshold：神经元的发放阈值
+* surrogate：反向传播的替代函数
+* tau：膜时间常数
+* decay_input：是否采用衰减输入
+* v_reset：膜电位的重置值
+* detach_reset：是否将重置操作从计算图中分离
+* store_v_seq：是否存储膜电位序列</p>
+</section>
+<section id="rplifnode">
+<h2>RPLIFNode<a class="headerlink" href="#rplifnode" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>不应期泄漏积分 - 发放（Refractory Period LIF）神经元的实现</p>
+</dd>
+<dt>引用：</dt><dd><p>Li, Yang, et al., “Incorporating the Refractory Period into Spiking Neural Networks through Spike-Triggered Threshold Dynamics”, MM’2025. <a class="reference external" href="https://arxiv.org/pdf/2509.17769">https://arxiv.org/pdf/2509.17769</a></p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>v_threshold：神经元的发放阈值</p></li>
+<li><p>surrogate：反向传播的替代函数</p></li>
+<li><p>tau：膜时间常数</p></li>
+<li><p>decay_input：是否采用衰减输入</p></li>
+<li><p>v_reset：膜电位的重置值</p></li>
+<li><p>detach_reset：是否将重置操作从计算图中分离</p></li>
+<li><p>store_v_seq：是否存储膜电位序列</p></li>
+<li><p>alpha：梯度代理的缩放因子</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="params.html" class="btn btn-neutral float-left" title="参数设置" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="encoding.html" class="btn btn-neutral float-right" title="编码方式" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Tecl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

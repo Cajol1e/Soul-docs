@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>编码方式 &mdash; soul-docs v0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2fea6348"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="数据集" href="datasets/index.html" />
+    <link rel="prev" title="神经元" href="neuron.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            soul-docs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">从一个例子开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="params.html">参数设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neuron.html">神经元</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">编码方式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#binary-parallel">binary_parallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#binary-sequential">binary_sequential</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bsa">bsa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#burst">burst</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#direct">direct</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase">phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#poisson">poisson</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#population">population</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rank-order">rank_order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#temporal">temporal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rate">rate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sdr">sdr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tcr-mw">tcr_mw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tcr-sf">tcr_sf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tcr-tbr">tcr_tbr</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="datasets/index.html">数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gradient.html">梯度代理函数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/index.html">模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">度量工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app/index.html">APP</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">soul-docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">编码方式</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/encoding.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>编码方式<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>本章，我们将介绍Soul工具包支持的编码方式，通过不同的编码方式，我们可以将外部输入信息（如图像、音频、传感器数据）转换为各种脉冲神经网络可识别的脉冲序列的规则或方法。
+Soul工具包支持以下编码方式：</p>
+<section id="binary-parallel">
+<h2>binary_parallel<a class="headerlink" href="#binary-parallel" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>并行二进制编码：在时间步 t=0…B-1（t 小于 B 时）对 B 个比特进行编码，具体方式为生成同步脉冲，并在时间窗口内重复（本文中简化为仅在 t&lt;B 时发射一次）。</p>
+</dd>
+<dt>引用：</dt><dd><p>Auge et al., Survey (Correlation &amp; synchrony – parallel binary).</p>
+</dd>
+</dl>
+</section>
+<section id="binary-sequential">
+<h2>binary_sequential<a class="headerlink" href="#binary-sequential" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>时序二进制编码：将每个数值量化为 B 位整数，并在不同时间步上发射比特（时间步 t 对应比特位序号）。输入范围为 [0,1]。</p>
+</dd>
+<dt>引用：</dt><dd><p>Auge et al., Survey (Global referenced binary – sequential).</p>
+</dd>
+</dl>
+</section>
+<section id="bsa">
+<h2>bsa<a class="headerlink" href="#bsa" title="Link to this heading"></a></h2>
+<dl>
+<dt>介绍：</dt><dd><dl class="simple">
+<dt>具有形状感知路由的本氏脉冲算法（Ben’s Spiker Algorithm）：</dt><dd><ul class="simple">
+<li><p>视觉（输入输出维度）：(C,H,W) -&gt; (T,C,H,W)</p></li>
+<li><p>运动（输入输出维度）：(W,C) -&gt; (T,W,C)</p></li>
+</ul>
+</dd>
+</dl>
+<p>per-channel min-max normalization; causal kernel; greedy residue update;
+强度 -&gt; 延迟映射</p>
+</dd>
+<dt>引用：</dt><dd><p>Schrauwen &amp; Van Campenhout, IJCNN 2003 (BSA)
+Auge et al., Neural Processing Letters 2021 (Survey)</p>
+</dd>
+</dl>
+</section>
+<section id="burst">
+<h2>burst<a class="headerlink" href="#burst" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>爆发式编码编码器。更强的输入会在 T 个时间步内发射更密集的脉冲包（即 “爆发脉冲”）。每个元素会发射 B 个脉冲，脉冲之间的间隔（ISI，Inter-Spike Interval）由输入决定，且发射时序遵循确定性调度规则。</p>
+</dd>
+<dt>引用：</dt><dd><p>Guo et al., “Neural Coding in Spiking Neural Networks: A Comparative Study for Robust Neuromorphic Systems”,Frontiers in Neuroscience, 2021 (burst definition &amp; properties)</p>
+</dd>
+</dl>
+</section>
+<section id="direct">
+<h2>direct<a class="headerlink" href="#direct" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）输入的直接编码机制实现。</p>
+</dd>
+</dl>
+</section>
+<section id="phase">
+<h2>phase<a class="headerlink" href="#phase" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>输入的二进制相位编码（多脉冲型）。该编码方式通过贪心二进制分数展开，将 [0,1] 区间内的归一化数值映射为跨 T 个相位的脉冲序列。</p>
+</dd>
+<dt>引用：</dt><dd><p>Hwang &amp; Kung, “One-Spike SNN: Single-Spike Phase Coding with Base Manipulation for ANN-to-SNN Conversion Loss Minimization”, IEEE 2025.</p>
+</dd>
+</dl>
+</section>
+<section id="poisson">
+<h2>poisson<a class="headerlink" href="#poisson" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>泊松编码。在编码器内部将输入归一化到 [0,1] 区间，随后在每个时间步以概率 p（该概率等于归一化后的输入值）发射一个脉冲。输出遵循 “时间优先” 的维度顺序，且空间维度形状与输入保持一致。</p>
+</dd>
+<dt>引用：</dt><dd><p>snnTorch spikegen.rate (Poisson/binomial spike generator)
+BindsNET PoissonEncoder
+Diehl &amp; Cook (2015), MNIST pixels to Poisson spikes</p>
+</dd>
+</dl>
+</section>
+<section id="population">
+<h2>population<a class="headerlink" href="#population" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>群体编码。其公式与广播语义均与 Norse 库的 PopulationEncoder（群体编码器）完全一致：采用高斯调谐曲线（Gaussian tuning curves），且曲线中心在 [low, high] 区间内均匀分布。该封装器提供了一个双参数接口encode(inputs, num_steps)：若num_steps&gt;1，编码后的张量会沿新增的前置时间维度重复，以适配 “时间优先” 的处理流程，且不改变编码本身的内容。</p>
+</dd>
+<dt>引用：</dt><dd><p>Norse docs: norse.torch.module.encode.PopulationEncoder <a class="reference external" href="https://norse.github.io/norse/generated/norse.torch.module.encode.PopulationEncoder.html">https://norse.github.io/norse/generated/norse.torch.module.encode.PopulationEncoder.html</a>
+Norse docs: norse.torch.functional.encode (population encoding) <a class="reference external" href="https://norse.github.io/norse/auto_api/norse.torch.functional.encode.html">https://norse.github.io/norse/auto_api/norse.torch.functional.encode.html</a></p>
+</dd>
+</dl>
+</section>
+<section id="rank-order">
+<h2>rank_order<a class="headerlink" href="#rank-order" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>排序编码。对于每个样本，沿通道维度（或最后一个维度）对数值进行排序，将排序后的等级映射到离散时间步，然后在映射得到的时间步上发射一个脉冲。</p>
+</dd>
+<dt>引用：</dt><dd><p>Alan Jeffares et al., “Spike-inspired rank coding for fast and accurate recurrent neural networks”, Proc. ICLR 2022.https://github.com/codingrank</p>
+</dd>
+</dl>
+</section>
+<section id="temporal">
+<h2>temporal<a class="headerlink" href="#temporal" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）输入的时序 / 延迟编码机制实现</p>
+</dd>
+<dt>引用：</dt><dd><p>JK Eshraghian et al., “Training Spiking Neural Networks Using Lessons From Deep Learning”, Proc. IEEE’2023. <a class="reference external" href="https://github.com/jeshraghian/snntorch">https://github.com/jeshraghian/snntorch</a></p>
+</dd>
+</dl>
+</section>
+<section id="rate">
+<h2>rate<a class="headerlink" href="#rate" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>脉冲神经网络（SNN）输入的速率编码机制实现</p>
+</dd>
+<dt>引用：</dt><dd><p>JK Eshraghian et al., “Training Spiking Neural Networks Using Lessons From Deep Learning”, Proc. IEEE’2023. <a class="reference external" href="https://github.com/jeshraghian/snntorch">https://github.com/jeshraghian/snntorch</a></p>
+</dd>
+</dl>
+</section>
+<section id="sdr">
+<h2>sdr<a class="headerlink" href="#sdr" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>SDR 式同步性：在每个时间片内，激活每个位置上的前 k 个通道。该方式会跨通道生成稀疏且同步的通道组。</p>
+</dd>
+<dt>引用：</dt><dd><p>Auge et al., Survey (Correlation &amp; synchrony; SDR).</p>
+</dd>
+</dl>
+</section>
+<section id="tcr-mw">
+<h2>tcr_mw<a class="headerlink" href="#tcr-mw" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><dl class="simple">
+<dt>具有形状感知路由的时间对比度移动窗口（Temporal-Contrast MW）：</dt><dd><ul class="simple">
+<li><p>运动 / 声学（输入输出维度）：(W,C) -&gt; (T,W,C)，沿 W 维度进行移动窗口均值计算</p></li>
+<li><p>视觉（输入输出维度）：(C,H,W) -&gt; (T,C,H,W)，通过平均池化（avg-pool）计算局部均值</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="tcr-sf">
+<h2>tcr_sf<a class="headerlink" href="#tcr-sf" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><dl class="simple">
+<dt>具有形状感知路由的时间对比度步进滤波（Temporal-Contrast SF）：</dt><dd><ul class="simple">
+<li><p>运动 / 声学（输入输出维度）：(W,C) -&gt; (T,W,C)，沿 W 维度进行基线步进计算</p></li>
+<li><p>视觉（输入输出维度）：(C,H,W) -&gt; (T,C,H,W)，基线 = 局部均值 + 微小泄漏项</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="tcr-tbr">
+<h2>tcr_tbr<a class="headerlink" href="#tcr-tbr" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><dl class="simple">
+<dt>具有形状感知路由的时间对比度时间基线重置（Temporal-Contrast TBR）：</dt><dd><ul class="simple">
+<li><p>运动 / 声学（输入输出维度）：(W,C) -&gt; (T,W,C)，沿 W 维度计算差值</p></li>
+<li><p>视觉（输入输出维度）：(C,H,W) -&gt; (T,C,H,W)，计算相对于局部均值的对比度</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt>引用：</dt><dd><p>Auge et al., “A Survey of Encoding Techniques for Signal Processing in SNNs”</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="neuron.html" class="btn btn-neutral float-left" title="神经元" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="datasets/index.html" class="btn btn-neutral float-right" title="数据集" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Tecl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

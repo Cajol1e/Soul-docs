@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vision 数据集 &mdash; soul-docs v0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2fea6348"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Wireless 数据集" href="wireless.html" />
+    <link rel="prev" title="Motion 数据集" href="motion.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            soul-docs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">从一个例子开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../params.html">参数设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../neuron.html">神经元</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../encoding.html">编码方式</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">数据集</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="acoustic.html">Acoustic 数据集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion.html">Motion 数据集</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Vision 数据集</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cifar10-100">CIFAR10/100</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tiny-imagenet">Tiny-ImageNet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cifar10-dvs">CIFAR10-DVS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dvs-gesture">DVS-Gesture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ncaltech101">NCaltech101</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nmnist">NMNIST</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mnist">MNIST</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fashionmnist">FashionMNIST</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#svhn">SVHN</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wireless.html">Wireless 数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../gradient.html">梯度代理函数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metrics.html">度量工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app/index.html">APP</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">soul-docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">数据集</a></li>
+      <li class="breadcrumb-item active">Vision 数据集</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/datasets/vision.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="vision">
+<h1>Vision 数据集<a class="headerlink" href="#vision" title="Link to this heading"></a></h1>
+<p>以下为Soul工具包支持的视觉/图像相关数据集：</p>
+<section id="cifar10-100">
+<h2>CIFAR10/100<a class="headerlink" href="#cifar10-100" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>引用：</dt><dd><p><a class="reference external" href="https://www.cs.utoronto.ca/~kriz/learning-features-2009-TR.pdf">https://www.cs.utoronto.ca/~kriz/learning-features-2009-TR.pdf</a></p>
+</dd>
+<dt>下载地址：</dt><dd><p><a class="reference external" href="https://www.cs.toronto.edu/~kriz/cifar.html">https://www.cs.toronto.edu/~kriz/cifar.html</a></p>
+</dd>
+</dl>
+<p>详细信息：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>RGB size： 3 x 32 x 32</p></li>
+<li><p>number of classes： 10100</p></li>
+<li><p>classes： plane, car, bird, cat, deer, dog, frog, horse, ship, truck for CIFAR10; 100 different classes for CIFAR100</p></li>
+<li><p>train number： 50000</p></li>
+<li><p>test number： 10000</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="tiny-imagenet">
+<h2>Tiny-ImageNet<a class="headerlink" href="#tiny-imagenet" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>引用：</dt><dd><p><a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/5206848/">https://ieeexplore.ieee.org/abstract/document/5206848/</a></p>
+</dd>
+<dt>下载地址：</dt><dd><p><a class="reference external" href="https://www.kaggle.com/c/tiny-imagenet">https://www.kaggle.com/c/tiny-imagenet</a></p>
+</dd>
+</dl>
+<p>详细信息：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>RGB size： 3 x 224 x 224</p></li>
+<li><p>number of classes： 200</p></li>
+<li><p>classes： goldfish，European fire salamander，bullfrog…</p></li>
+<li><p>train number： 100000</p></li>
+<li><p>test number： 10000</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="cifar10-dvs">
+<h2>CIFAR10-DVS<a class="headerlink" href="#cifar10-dvs" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>引用：</dt><dd><p><a class="reference external" href="https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2017.00309/full">https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2017.00309/full</a></p>
+</dd>
+<dt>下载地址：</dt><dd><p><a class="reference external" href="https://figshare.com/articles/dataset/CIFAR10-DVS_New/4724671">https://figshare.com/articles/dataset/CIFAR10-DVS_New/4724671</a></p>
+</dd>
+</dl>
+<p>详细信息：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>DVS size： 2 x receptor_size x receptor_size</p></li>
+<li><p>number of classes： 10</p></li>
+<li><p>classes： plane, car, bird, cat, deer, dog, frog, horse, ship, truck</p></li>
+<li><p>train number： 50000</p></li>
+<li><p>test number： 10000</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="dvs-gesture">
+<h2>DVS-Gesture<a class="headerlink" href="#dvs-gesture" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>引用：</dt><dd><p><a class="reference external" href="https://ieeexplore.ieee.org/document/8100264">https://ieeexplore.ieee.org/document/8100264</a></p>
+</dd>
+<dt>下载地址：</dt><dd><p><a class="reference external" href="https://ibm.ent.box.com/s/3hiq58ww1pbbjrinh367ykfdf60xsfm8/folder/50167556794">https://ibm.ent.box.com/s/3hiq58ww1pbbjrinh367ykfdf60xsfm8/folder/50167556794</a></p>
+</dd>
+</dl>
+<p>详细信息：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>DVS size： 2 x receptor_size x receptor_size</p></li>
+<li><p>number of classes： 11</p></li>
+<li><dl class="simple">
+<dt>classes：</dt><dd><p>Hand Clapping, Right Hand Wave, Left Hand Wave, Right Arm Clockwise,
+Left Arm Clockwise, Arm Roll, Left Arm Counter Clockwise, Right Arm Counter Clockwise,
+Both Arms Clockwise, Both Arms Counter Clockwise, invalid data</p>
+</dd>
+</dl>
+</li>
+<li><p>train number： 1176</p></li>
+<li><p>test number： 288</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="ncaltech101">
+<h2>NCaltech101<a class="headerlink" href="#ncaltech101" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>引用：</dt><dd><p><a class="reference external" href="https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2015.00437/full">https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2015.00437/full</a></p>
+</dd>
+<dt>下载地址：</dt><dd><p><a class="reference external" href="https://drive.google.com/drive/folders/1sY91hL_iHnmfRXSTc058bfZ0GQcEC6St">https://drive.google.com/drive/folders/1sY91hL_iHnmfRXSTc058bfZ0GQcEC6St</a></p>
+</dd>
+</dl>
+<p>详细信息：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>DVS size： 2 x receptor_size x receptor_size</p></li>
+<li><p>number of classes： 101</p></li>
+<li><p>classes： 100 objection classes and 1 background class</p></li>
+<li><p>train number： 7000</p></li>
+<li><p>test number： 1200</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="nmnist">
+<h2>NMNIST<a class="headerlink" href="#nmnist" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>引用：</dt><dd><p><a class="reference external" href="https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2015.00437/full">https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2015.00437/full</a></p>
+</dd>
+<dt>下载地址：</dt><dd><p><a class="reference external" href="https://www.kaggle.com/datasets/surya77/nmnist">https://www.kaggle.com/datasets/surya77/nmnist</a></p>
+</dd>
+</dl>
+<p>详细信息：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>DVS size： 2 x receptor_size x receptor_size</p></li>
+<li><p>number of classes： 10</p></li>
+<li><p>classes： 10 numbers</p></li>
+<li><p>train number： 60000</p></li>
+<li><p>test number： 10000</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="mnist">
+<h2>MNIST<a class="headerlink" href="#mnist" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>引用：</dt><dd><p><a class="reference external" href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=fr&amp;user=WLN3QrAAAAAJ&amp;citation_for_view=WLN3QrAAAAAJ:6fs0NoO7GbkC">https://scholar.google.com/citations?view_op=view_citation&amp;hl=fr&amp;user=WLN3QrAAAAAJ&amp;citation_for_view=WLN3QrAAAAAJ:6fs0NoO7GbkC</a></p>
+</dd>
+<dt>下载地址：</dt><dd><p><a class="reference external" href="http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/">http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/</a></p>
+</dd>
+</dl>
+<p>详细信息：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>GrayScale size： 1 x 32 x 32</p></li>
+<li><p>number of classes： 10</p></li>
+<li><p>classes： t-shirt, trouser, pullover, dress, coat, sandal, shirt, sneaker, bag, ankle boot</p></li>
+<li><p>train number： 60000</p></li>
+<li><p>test number： 10000</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="fashionmnist">
+<h2>FashionMNIST<a class="headerlink" href="#fashionmnist" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>引用：</dt><dd><p><a class="reference external" href="https://arxiv.org/abs/1708.07747">https://arxiv.org/abs/1708.07747</a></p>
+</dd>
+<dt>下载地址：</dt><dd><p><a class="reference external" href="https://www.kaggle.com/datasets/surya77/nmnist">https://www.kaggle.com/datasets/surya77/nmnist</a></p>
+</dd>
+</dl>
+<p>详细信息：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>DVS size： 2 x receptor_size x receptor_size</p></li>
+<li><p>number of classes： 10</p></li>
+<li><p>classes： 10 numbers</p></li>
+<li><p>train number： 60000</p></li>
+<li><p>test number： 10000</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="svhn">
+<h2>SVHN<a class="headerlink" href="#svhn" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>引用：</dt><dd><p><a class="reference external" href="https://experimentationground.wordpress.com/2016/09/26/digit-recognition-from-google-street-view-images/">https://experimentationground.wordpress.com/2016/09/26/digit-recognition-from-google-street-view-images/</a></p>
+</dd>
+<dt>下载地址：</dt><dd><p><a class="reference external" href="https://www.kaggle.com/datasets/stanfordu/street-view-house-numbers">https://www.kaggle.com/datasets/stanfordu/street-view-house-numbers</a></p>
+</dd>
+</dl>
+<p>详细信息：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>GrayScale size： 1 x 32 x 32</p></li>
+<li><p>number of classes： 10</p></li>
+<li><p>classes： 10 numbers</p></li>
+<li><p>train number : 73257</p></li>
+<li><p>test number : 26032</p></li>
+<li><p>extra number : 531131</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="motion.html" class="btn btn-neutral float-left" title="Motion 数据集" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="wireless.html" class="btn btn-neutral float-right" title="Wireless 数据集" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Tecl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

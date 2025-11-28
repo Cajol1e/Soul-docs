@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>梯度代理函数 &mdash; soul-docs v0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2fea6348"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="模型" href="models/index.html" />
+    <link rel="prev" title="Wireless 数据集" href="datasets/wireless.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            soul-docs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">从一个例子开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="params.html">参数设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neuron.html">神经元</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoding.html">编码方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets/index.html">数据集</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">梯度代理函数</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#atan">atan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#erf">erf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sigmoid">sigmoid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rectangle">rectangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fastsigmoid">fastsigmoid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qpseudospike">qpseudospike</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#softsign">softsign</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quandratic">quandratic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exp">exp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#superspike">superspike</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ternary">ternary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quant">quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quant4">quant4</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models/index.html">模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">度量工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app/index.html">APP</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">soul-docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">梯度代理函数</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gradient.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>梯度代理函数<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>神经元的计算过程中存在阈值过滤的操作，为了避免这种不可导的操作影响模型训练，我们对不同的神经元采用不同的梯度代理函数（按照原论文）。
+若您想就梯度代理函数做一些尝试，可以修改对应的 <code class="docutils literal notranslate"><span class="pre">config/neuron/*.yaml</span></code> 配置中的 <code class="docutils literal notranslate"><span class="pre">surrogate</span></code> 属性来实现。</p>
+<section id="atan">
+<h2>atan<a class="headerlink" href="#atan" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>反正切梯度代理函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Yanqi Chen et al., “State transition of dendritic spines improves learning of sparse spiking neural networks”, ICML’2022.</p>
+</dd>
+</dl>
+</section>
+<section id="erf">
+<h2>erf<a class="headerlink" href="#erf" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>高斯误差（erf）替代脉冲函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Esser S. K. et al., “Backpropagation for energy-efficient neuromorphic computing”, NeurIPS’2015.</p>
+</dd>
+</dl>
+</section>
+<section id="sigmoid">
+<h2>sigmoid<a class="headerlink" href="#sigmoid" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>Sigmoid梯度代理函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Woźniak S. et al., “Deep learning incorporating biologically inspired neural dynamics and in-memory computing”, Nat. Mach. Intell.’2020.</p>
+</dd>
+</dl>
+</section>
+<section id="rectangle">
+<h2>rectangle<a class="headerlink" href="#rectangle" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>矩形替代脉冲函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Yujie Wu et al., “Direct Training for Spiking Neural Networks: Faster, Larger, Better”, AAAI’2019.</p>
+</dd>
+</dl>
+</section>
+<section id="fastsigmoid">
+<h2>fastsigmoid<a class="headerlink" href="#fastsigmoid" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>Fast sigmoid梯度代理函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Woźniak S. et al., “Deep learning incorporating biologically inspired neural dynamics and in-memory computing”, Nat. Mach. Intell.’2020.</p>
+</dd>
+</dl>
+</section>
+<section id="qpseudospike">
+<h2>qpseudospike<a class="headerlink" href="#qpseudospike" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>q 阶伪脉冲（q-PseudoSpike）替代脉冲函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Herranz-Celotti, L. et al., “Stabilizing Spiking Neuron Training”, NeurIPS’2015.</p>
+</dd>
+</dl>
+</section>
+<section id="softsign">
+<h2>softsign<a class="headerlink" href="#softsign" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>软符号替代脉冲函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Zenke F. et al., “Superspike: Supervised learning in multilayer spiking neural networks”, Neural computation’2018.</p>
+</dd>
+</dl>
+</section>
+<section id="quandratic">
+<h2>quandratic<a class="headerlink" href="#quandratic" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>分段二次替代脉冲函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Bellec, G. et al., “Long short-term memory and learning-to-learn in networks of spiking neurons”, NeurIPS’2018.</p>
+</dd>
+</dl>
+</section>
+<section id="exp">
+<h2>exp<a class="headerlink" href="#exp" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>分段指数梯度代理函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Shrestha, S. B. et al., “Slayer: Spike layer error reassignment in time”, NeurIPS’2018.</p>
+</dd>
+</dl>
+</section>
+<section id="superspike">
+<h2>superspike<a class="headerlink" href="#superspike" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>超脉冲梯度代理函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Zenke F. et al., “Superspike: Supervised learning in multilayer spiking neural networks”, Neural computation’2018.</p>
+</dd>
+</dl>
+</section>
+<section id="ternary">
+<h2>ternary<a class="headerlink" href="#ternary" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>时序泄漏积分 - 发放（TLIF）的特定梯度代理函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Yufei Guo et al., “Ternary spike: Learning ternary spikes for spiking neural networks”, AAAI’2024.</p>
+</dd>
+</dl>
+</section>
+<section id="quant">
+<h2>quant<a class="headerlink" href="#quant" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>时序非线性泄漏积分 - 发放（INTLIF）的特定梯度代理函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Zhenxin Lei et al., “Spike2former: Efficient spiking transformer for high-performance image segmentation”, AAAI’2025.</p>
+</dd>
+</dl>
+</section>
+<section id="quant4">
+<h2>quant4<a class="headerlink" href="#quant4" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>介绍：</dt><dd><p>时序非线性泄漏积分 - 发放（INTLIF）的特定替代函数</p>
+</dd>
+<dt>引用：</dt><dd><p>Zhenxin Lei et al., “Spike2former: Efficient spiking transformer for high-performance image segmentation”, AAAI’2025.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="datasets/wireless.html" class="btn btn-neutral float-left" title="Wireless 数据集" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="models/index.html" class="btn btn-neutral float-right" title="模型" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Tecl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

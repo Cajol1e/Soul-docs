@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>度量工具 &mdash; soul-docs v0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2fea6348"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="APP" href="app/index.html" />
+    <link rel="prev" title="Wireless 模型" href="models/wireless.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            soul-docs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">从一个例子开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="params.html">参数设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neuron.html">神经元</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoding.html">编码方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets/index.html">数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gradient.html">梯度代理函数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/index.html">模型</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">度量工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#accuracy-py">accuracy.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#num-params-py">num_params.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sops-py">sops.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#power-energy-py">power_energy.py</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="app/index.html">APP</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">soul-docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">度量工具</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/metrics.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>度量工具<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>本章，我们将了解 <code class="docutils literal notranslate"><span class="pre">soul.utils.metrics</span></code> 包中各个工具文件的使用方法。</p>
+<section id="accuracy-py">
+<h2>accuracy.py<a class="headerlink" href="#accuracy-py" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>AverageMeter：统计和存储训练结果的工具类，使用方法如下：</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义工具对象分别记录Top1准确率和损失值</span>
+<span class="n">test_top1_meter</span><span class="p">,</span> <span class="n">test_loss_meter</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(),</span> <span class="n">AverageMeter</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+        <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">targets</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># default data shape (B, T, input_size) -&gt; (T, B, input_size)</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">acc1</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">topk</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+
+        <span class="n">test_loss_meter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">targets</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
+        <span class="n">test_top1_meter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">acc1</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">targets</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
+<span class="c1"># 通过avg属性获得准确率和损失值的平均值</span>
+<span class="n">test_acc</span> <span class="o">=</span> <span class="n">test_top1_meter</span><span class="o">.</span><span class="n">avg</span>
+<span class="n">test_loss</span> <span class="o">=</span> <span class="n">test_loss_meter</span><span class="o">.</span><span class="n">avg</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>accuracy(output, target, topk=(1,))：针对指定的topk值，计算前topk个预测结果的准确率，使用方法如上。</p></li>
+</ul>
+</section>
+<section id="num-params-py">
+<h2>num_params.py<a class="headerlink" href="#num-params-py" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>count_parameters(model, trainable=False)：帮助您计算SNN模型的参数量，使用方法如下：</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_parameters</span> <span class="o">=</span> <span class="n">count_parameters</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of params for model </span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">n_parameters</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> M&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="sops-py">
+<h2>sops.py<a class="headerlink" href="#sops-py" title="Link to this heading"></a></h2>
+<p>该工具通过注册钩子函数统计理论能量消耗，使用方法如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate theoretical energy cost per sample inference</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Counting FLOPs/SOPs for theoretical inference cost&#39;</span><span class="p">)</span>
+<span class="c1"># 定义ops监视器，is_sop参数表示是否模拟在神经形态芯片上的计算情况</span>
+<span class="n">ops_monitor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">is_sop</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sop&#39;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">test_loader</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;batch&#39;</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Count OPs: &#39;</span><span class="p">):</span>
+    <span class="c1"># default data shape (B, T, input_size) -&gt; (T, B, input_size)</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+
+<span class="c1"># 取得各个Module的数值操作数</span>
+<span class="n">total_sops</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">MODULE_SOP_DICT</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">total_sops</span> <span class="o">+=</span> <span class="n">v</span>
+<span class="n">avg_sops</span> <span class="o">=</span> <span class="n">total_sops</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span>
+
+<span class="c1"># cost_per_op表示每个计算操作的能耗为多少</span>
+<span class="n">cost_per_op</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;e_ac&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;sop&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;e_mac&#39;</span><span class="p">]</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average number of </span><span class="si">{</span><span class="s1">&#39;SOPs&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sop&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;FLOPs&#39;</span><span class="si">}</span><span class="s2"> for model </span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> inference per sample: </span><span class="si">{</span><span class="n">avg_sops</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> M&quot;</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;corresponding theoretical energy cost: </span><span class="si">{</span><span class="n">avg_sops</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cost_per_op</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mj&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="power-energy-py">
+<h2>power_energy.py<a class="headerlink" href="#power-energy-py" title="Link to this heading"></a></h2>
+<p>在 Jetson 系列边缘设备上运行脉冲神经网络（SNNs）时，能耗监测的实现方案，使用方法如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取当前设备</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">getDevice</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected device: </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># 打印出设备名称</span>
+
+<span class="c1"># 定义能耗监视器，interval表示采样间隔</span>
+<span class="n">pl</span> <span class="o">=</span> <span class="n">PowerLogger</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="c1"># 开始监视</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;5s IDLE time passed, start IO bench mark now!&#39;</span><span class="p">)</span>
+
+<span class="c1"># insert your code here！</span>
+
+<span class="c1"># 可以通过 recordEvent(str) 方法记录事件信息</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">recordEvent</span><span class="p">(</span><span class="s1">&#39;started IO bench mark&#39;</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">recordEvent</span><span class="p">(</span><span class="s1">&#39;ding! 3s&#39;</span><span class="p">)</span>
+<span class="c1"># 通过stress模拟计算瓶颈</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;stress -c 12 -t 3&#39;</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">recordEvent</span><span class="p">(</span><span class="s1">&#39;ding! 2s&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;stress -c 1 -t 2&#39;</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">recordEvent</span><span class="p">(</span><span class="s1">&#39;ding! 1s&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;stress -c 2 -t 1 -m 4&#39;</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="c1"># 监视结束</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="c1"># 打印总能耗</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">showDataTraces</span><span class="p">()</span>
+<span class="c1"># 打印所有监控节点的完整报告，如(power,voltage,current)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">printFullReport</span><span class="p">(</span><span class="n">getDevice</span><span class="p">()))</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="models/wireless.html" class="btn btn-neutral float-left" title="Wireless 模型" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="app/index.html" class="btn btn-neutral float-right" title="APP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Tecl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

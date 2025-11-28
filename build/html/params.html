@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>参数设置 &mdash; soul-docs v0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2fea6348"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="神经元" href="neuron.html" />
+    <link rel="prev" title="从一个例子开始" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            soul-docs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">从一个例子开始</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">参数设置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#soul-utils-parser-parse-args">soul.utils.parser.parse_args方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#soul-config-basic-yaml">soul.config.basic.yaml基础配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#soul-config-model-application-yaml">soul.config.model.application.*.yaml模型配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#soul-config-neuron-yaml">soul.config.neuron.*.yaml神经元配置</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="neuron.html">神经元</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoding.html">编码方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets/index.html">数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gradient.html">梯度代理函数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/index.html">模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">度量工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app/index.html">APP</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">soul-docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">参数设置</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/params.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>参数设置<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>本章内容中，我们将了解如何为训练流程设置参数。
+Soul工具包中，为训练流程设置参数的方式分为三种：
+* 根据 <code class="docutils literal notranslate"><span class="pre">soul.utils.parser.parse_args()</span></code> 方法中的对应参数传参
+* 修改 <code class="docutils literal notranslate"><span class="pre">soul.config</span></code> 中的yaml文件
+* 直接修改训练源码</p>
+<section id="soul-utils-parser-parse-args">
+<h2>soul.utils.parser.parse_args方法<a class="headerlink" href="#soul-utils-parser-parse-args" title="Link to this heading"></a></h2>
+<ul>
+<li><p>–workers，-j：加载数据的子进程数</p></li>
+<li><p>–seed，-seed：随机种子</p></li>
+<li><p>–log_dir，-log_dir：日志输出地址</p></li>
+<li><p>–data_dir，-data_dir：数据集所在地址</p></li>
+<li><p>–model_dir，-model_dir：模型保存地址</p></li>
+<li><p>–epochs，-epochs：训练次数</p></li>
+<li><p>–batch_size，-b：训练批次大小</p></li>
+<li><p>–learning_rate，-lr：学习率</p></li>
+<li><p>–weight_decay，-wd：权重衰减幅度</p></li>
+<li><p>–momentum，-momentum：优化器的惯性系数</p></li>
+<li><p>–optimizer，-optimizer：使用的优化器，可选项如下</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>sgd：SGD优化器</p></li>
+<li><p>adam：Adam优化器</p></li>
+<li><p>adamw：AdamW优化器</p></li>
+<li><p>rmsprop：RMSprop优化器</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>–scheduler，-scheduler：使用的训练调度器，可选项如下</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>cosine：CosineAnnealingLR调度器</p></li>
+<li><p>linear：StepLR调度器</p></li>
+<li><p>warmup：CosineAnnealingWarmRestarts调度器</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>–dataset_name，-dataset：训练使用的数据集，目前Soul支持的数据集如下：</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>motion sensing：</dt><dd><p>CIFAR-10、CIFAR-100、SVHN、Tiny-ImageNet、MNIST、Fashion-MNIST</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>vision sensing：</dt><dd><p>UCI HAR、HHAR、MotionSense、Shoaib</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>acoustic sensing：</dt><dd><p>UrbanSound8K、GSC、GTZAN、ESC-50</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>wireless sensing：</dt><dd><p>UT-HAR、NTU-HumanID、BullyDetect、ARIL、NTU-HAR、Widar 3.0</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Neuromorphic sensing：</dt><dd><p>CIFAR10-DVS、DVS-Gesture、SHD、SSC</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>关于各个模态的不同数据集更加详细的介绍，请参考 <a class="reference internal" href="datasets/index.html"><span class="doc">数据集</span></a>
+* –model，-m：将训练的脉冲神经网络模型类型，目前Soul支持的模型如下：</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>motion sensing：</dt><dd><p>SpikingMLP、SpikingLeNet、SpikingRNN、SpikingConvRNN、SpikingVGG5、
+SpikingVGG9、SpikingVGG11、SpikingVGG13、SpikingVGG16、SpikingVGG19、
+SEWResNet18、SEWResNet34、SEWResNet50、MSResNet18、MSResNet34、
+MSResNet50、Spikformer256、Spikformer384、Spikformer512、MetaSpikeformer256、
+MetaSpikeformer384、MetaSpikeformer512、SpikingResformer192、SpikingResformer256、
+SpikingResformer384、SpikingResformer512、QKFormer256、QKFormer384、QKFormer512</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>vision sensing：</dt><dd><p>SpikingMLP、SpikingLeNet、SpikingRNN、SpikingConvRNN、SpikingVGG9、
+SpikingVGG16、SEWResNet18、SEWResNet50、MSResNet18、MSResNet50、
+SpikingTCN</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>acoustic sensing：</dt><dd><p>SpikingMLP、SpikingLeNet、SpikingRNN、SpikingConvRNN、DCNN、
+SenseHAR、DCL、ISpikformer</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>wireless sensing：</dt><dd><p>SpikingMLP、SpikingLeNet、SpikingRNN、SpikingConvRNN、SpikingTCN</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<ul>
+<li><p>–coding_schema，-coding：采用的静态原始输入的编码方案，可选的编码方式如下：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>binary_par_encode：</p></li>
+<li><p>binary_seq_encode：</p></li>
+<li><p>bsa_encode：</p></li>
+<li><p>burst_encode：</p></li>
+<li><p>direct_code：</p></li>
+<li><p>phase_encode：</p></li>
+<li><p>poisson_encode：</p></li>
+<li><p>population_encode：</p></li>
+<li><p>rank_order_encode：</p></li>
+<li><p>temporal_encode：</p></li>
+<li><p>rate_encode：</p></li>
+<li><p>sdr_encode：</p></li>
+<li><p>tcr_mwc_encode：</p></li>
+<li><p>tcr_sf_decode：</p></li>
+<li><p>tcr_tbr_encode：</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>关于神经元的更加详细的介绍，请参考 <a class="reference internal" href="encoding.html"><span class="doc">编码方式</span></a>
+* –neuron_type，-n：采用的神经元类型，目前Soul支持的模型如下：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>LIFNode:</p></li>
+<li><p>ParametricLIFNode:</p></li>
+<li><p>CLIFNode:</p></li>
+<li><p>GatedLIFNode:</p></li>
+<li><p>INTLIFNode:</p></li>
+<li><p>ParallelSpikingNode:</p></li>
+<li><p>TLIFNode:</p></li>
+<li><p>IELIFNode:</p></li>
+<li><p>LTMD:</p></li>
+<li><p>STBIF:</p></li>
+<li><p>ILIFNeuron:</p></li>
+<li><p>RPLIFNode:</p></li>
+</ul>
+</div></blockquote>
+<p>关于神经元的更加详细的介绍，请参考 <a class="reference internal" href="neuron.html"><span class="doc">神经元</span></a>
+*  –time_step，-T：脉冲神经网络模型推理时的时间步
+*  –noise_type，-noise：在实验分析时可设置的噪声（不适用于neuromorphic sensing任务），可选项有：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>gaussian</p></li>
+<li><p>dropouts</p></li>
+</ul>
+</div></blockquote>
+<ul>
+<li><p>–noise_intensity，-ni：噪声强度（高斯噪声的sigma值、dropout层的丢弃率）</p></li>
+<li><p>–noise_phase，-phase：添加噪声的模式</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>train</p></li>
+<li><p>test</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="soul-config-basic-yaml">
+<h2>soul.config.basic.yaml基础配置<a class="headerlink" href="#soul-config-basic-yaml" title="Link to this heading"></a></h2>
+<ul>
+<li><p>workers：处理数据的工作进程数量</p></li>
+<li><p>seed：随机种子</p></li>
+<li><p>state：日志等级</p></li>
+<li><p>log_dir：输出日志地址</p></li>
+<li><p>model_dir：保存模型的地址</p></li>
+<li><p>data_dir：输入数据集的地址</p></li>
+<li><p>sop：是否模拟神经形态芯片的能耗</p></li>
+<li><p>e_ac：在假定的 45 纳米硬件上，累加操作运行的能耗成本/皮焦（pJ）</p></li>
+<li><p>e_mac：在假定的 45 纳米硬件上，乘法累加操作的能耗成本/皮焦（pJ）</p></li>
+<li><p>application：默认应用场景（模态类型），可选项有：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>motion</p></li>
+<li><p>vision</p></li>
+<li><p>acoustic</p></li>
+<li><p>wireless</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>epochs：训练轮次数量</p></li>
+<li><p>batch_size：训练批次大小</p></li>
+<li><p>optimizer：训练所用优化器，可选项如下</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>sgd：SGD优化器</p></li>
+<li><p>adam：Adam优化器</p></li>
+<li><p>adamw：AdamW优化器</p></li>
+<li><p>rmsprop：RMSprop优化器</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>scheduler：训练所用调度器，可选项如下</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>cosine：CosineAnnealingLR调度器</p></li>
+<li><p>linear：StepLR调度器</p></li>
+<li><p>warmup：CosineAnnealingWarmRestarts调度器</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>learning_rate：学习率</p></li>
+<li><p>weight_decay：优化器的权重衰减值（L2 正则化惩罚项）</p></li>
+<li><p>momentum：优化器的惯性系数</p></li>
+<li><p>model：训练所用模型，目前Soul支持的模型如下：</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>motion sensing：</dt><dd><p>SpikingMLP、SpikingLeNet、SpikingRNN、SpikingConvRNN、SpikingVGG5、
+SpikingVGG9、SpikingVGG11、SpikingVGG13、SpikingVGG16、SpikingVGG19、
+SEWResNet18、SEWResNet34、SEWResNet50、MSResNet18、MSResNet34、
+MSResNet50、Spikformer256、Spikformer384、Spikformer512、MetaSpikeformer256、
+MetaSpikeformer384、MetaSpikeformer512、SpikingResformer192、SpikingResformer256、
+SpikingResformer384、SpikingResformer512、QKFormer256、QKFormer384、QKFormer512</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>vision sensing：</dt><dd><p>SpikingMLP、SpikingLeNet、SpikingRNN、SpikingConvRNN、SpikingVGG9、
+SpikingVGG16、SEWResNet18、SEWResNet50、MSResNet18、MSResNet50、
+SpikingTCN</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>acoustic sensing：</dt><dd><p>SpikingMLP、SpikingLeNet、SpikingRNN、SpikingConvRNN、DCNN、
+SenseHAR、DCL、ISpikformer</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>wireless sensing：</dt><dd><p>SpikingMLP、SpikingLeNet、SpikingRNN、SpikingConvRNN、SpikingTCN</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>neuron_type：所用神经元类型，目前Soul支持的模型如下：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>LIFNode:</p></li>
+<li><p>ParametricLIFNode:</p></li>
+<li><p>CLIFNode:</p></li>
+<li><p>GatedLIFNode:</p></li>
+<li><p>INTLIFNode:</p></li>
+<li><p>ParallelSpikingNode:</p></li>
+<li><p>TLIFNode:</p></li>
+<li><p>IELIFNode:</p></li>
+<li><p>LTMD:</p></li>
+<li><p>STBIF:</p></li>
+<li><p>ILIFNeuron:</p></li>
+<li><p>RPLIFNode:</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>time_step：脉冲神经网络的时间步长</p></li>
+<li><p>dataset_name：所用数据集类型，目前Soul支持的数据集如下：</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>motion sensing：</dt><dd><p>CIFAR-10、CIFAR-100、SVHN、Tiny-ImageNet、MNIST、Fashion-MNIST</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>vision sensing：</dt><dd><p>UCI HAR、HHAR、MotionSense、Shoaib</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>acoustic sensing：</dt><dd><p>UrbanSound8K、GSC、GTZAN、ESC-50</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>wireless sensing：</dt><dd><p>UT-HAR、NTU-HumanID、BullyDetect、ARIL、NTU-HAR、Widar 3.0</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Neuromorphic sensing：</dt><dd><p>CIFAR10-DVS、DVS-Gesture、SHD、SSC</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>coding_schema：静态原始输入的编码方案，可选的编码方式如下：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>binary_par_encode：</p></li>
+<li><p>binary_seq_encode：</p></li>
+<li><p>bsa_encode：</p></li>
+<li><p>burst_encode：</p></li>
+<li><p>direct_code：</p></li>
+<li><p>phase_encode：</p></li>
+<li><p>poisson_encode：</p></li>
+<li><p>population_encode：</p></li>
+<li><p>rank_order_encode：</p></li>
+<li><p>temporal_encode：</p></li>
+<li><p>rate_encode：</p></li>
+<li><p>sdr_encode：</p></li>
+<li><p>tcr_mwc_encode：</p></li>
+<li><p>tcr_sf_decode：</p></li>
+<li><p>tcr_tbr_encode：</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>receptor_size：DVS图像的大小</p></li>
+<li><p>window_size：运动传感数据集的滑动窗口采样的大小</p></li>
+<li><p>step_size：运动传感数据集的滑动窗口采样的补偿</p></li>
+<li><p>reduce_size：音频传感中原始梅尔频谱图的缩减尺寸</p></li>
+</ul>
+</section>
+<section id="soul-config-model-application-yaml">
+<h2>soul.config.model.application.*.yaml模型配置<a class="headerlink" href="#soul-config-model-application-yaml" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">soul.config.model</span></code> 下的配置文件的内容指导Soul构建指定的模型，若您想要修改某些模型配置，可以参考 <code class="docutils literal notranslate"><span class="pre">soul.model</span></code> 包中对应的模型修改初始化过程配置文件中的参数
+若想深入了解某个模型的参数意义，请参考 <a class="reference internal" href="models/index.html"><span class="doc">模型</span></a></p>
+</section>
+<section id="soul-config-neuron-yaml">
+<h2>soul.config.neuron.*.yaml神经元配置<a class="headerlink" href="#soul-config-neuron-yaml" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">soul.config.model</span></code> 下的配置文件的内容指导Soul构建指定的神经元，若您想要修改某些神经元配置，可以参考 <code class="docutils literal notranslate"><span class="pre">soul.neuron</span></code> 包中对应的神经元初始化过程修改配置文件中的参数
+若想深入了解某个神经元的参数意义，请参考 <a class="reference internal" href="neuron.html"><span class="doc">神经元</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="从一个例子开始" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="neuron.html" class="btn btn-neutral float-right" title="神经元" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Tecl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

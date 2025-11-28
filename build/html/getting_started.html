@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>从一个例子开始 &mdash; soul-docs v0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2fea6348"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="参数设置" href="params.html" />
+    <link rel="prev" title="基本概念" href="concepts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            soul-docs
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">基本概念</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">从一个例子开始</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">环境准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">训练准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">模型训练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">数据测量</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="params.html">参数设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neuron.html">神经元</a></li>
+<li class="toctree-l1"><a class="reference internal" href="encoding.html">编码方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets/index.html">数据集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gradient.html">梯度代理函数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models/index.html">模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">度量工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app/index.html">APP</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">soul-docs</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">从一个例子开始</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>从一个例子开始<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>为了快速了解如何利用SOUL训练一个SNN模型，让我们从一个代码案例开始，模型训练整个过程被分为：
+* 环境准备
+* 训练准备
+* 模型训练
+* 数据测量
+四个阶段展开。</p>
+<section id="id2">
+<h2>环境准备<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>首先，我们需要为我们的训练过程配置适当的参数：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">init_config</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">init_config()</span></code> 是``soul.utils``包下的函数，它会读取我们提前设置的配置信息并生成配置对象。
+配置信息的来源主要有两个：
+* <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code> 方法：在 <code class="docutils literal notranslate"><span class="pre">soul.utils.parser.parse_args()</span></code> 方法中，我们可以根据其中参数设置诸如：数据集地址、时间步、训练批次大小等训练基础信息
+* config文件夹中的配置文件：在 <code class="docutils literal notranslate"><span class="pre">soul/config/</span></code> 文件夹中包含大量的配置文件，主要分为：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config/basic.yaml</span></code> 基础配置文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config/neuron/*.yaml</span></code> 不同神经元的特殊配置</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config/model/application/*.yaml</span></code> 不同模态模型的特殊配置</p></li>
+</ul>
+</div></blockquote>
+<p>配置的优先级为： <code class="docutils literal notranslate"><span class="pre">config/model/application/*.yaml</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">config/neuron/*.yaml</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">config/basic.yaml</span></code>
+更多关于基础配置（ <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code> 、 <code class="docutils literal notranslate"><span class="pre">config/basic.yaml</span></code> ）的详细信息，请参考 <a class="reference internal" href="concepts.html"><span class="doc">基本概念</span></a>
+关于神经元和不同模态模型的特殊配置，请分别参考 <a class="reference internal" href="neuron.html"><span class="doc">神经元</span></a> 和 <a class="reference internal" href="neuron.html"><span class="doc">神经元</span></a></p>
+<p>在这之后，Soul会检查 <code class="docutils literal notranslate"><span class="pre">RANK</span></code> 和 <code class="docutils literal notranslate"><span class="pre">WORLD_SIZE</span></code> 环境变量，判断是否进入分布式模式,若处于分布式模式，则初始化进程间通信并绑定GPU：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;is_distributed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;RANK&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">and</span> <span class="s2">&quot;WORLD_SIZE&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
+<span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;is_distributed&#39;</span><span class="p">]:</span>
+    <span class="n">dist</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s1">&#39;nccl&#39;</span><span class="p">)</span>
+    <span class="n">local_rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;LOCAL_RANK&quot;</span><span class="p">])</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="n">local_rank</span><span class="p">)</span>
+    <span class="c1"># gpu for current process</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="n">local_rank</span><span class="p">)</span>
+    <span class="c1"># main process</span>
+    <span class="n">global_rank</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">get_rank</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+    <span class="n">local_rank</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">global_rank</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>在本案例中，优先使用GPU进行模型的训练
+Soul会为您准备logger以备调试信息的输出：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">global_rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">log_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;log_dir&#39;</span><span class="p">],</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+        <span class="n">config</span><span class="p">[</span><span class="s1">&#39;neuron_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">ensure_dir</span><span class="p">(</span><span class="n">log_path</span><span class="p">)</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;record-</span><span class="si">{</span><span class="n">get_local_time</span><span class="p">()</span><span class="si">}</span><span class="s1">.log&#39;</span><span class="p">),</span> <span class="n">default_level</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">])</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Distributed Training: </span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;is_distributed&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>训练准备<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>在训练准备阶段，我们首先要准备训练所需的训练数据和测试：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">test_dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">load_dataset(config)</span></code> 是 <code class="docutils literal notranslate"><span class="pre">soul.utils</span></code> 包下的函数，他会读取之前准备的配置对象中的信息，并按照要求读取和处理数据集的数据，需要注意的是，
+训练集的数据需要提前下载至本地供Soul使用，Soul使用的数据集及其下载地址可从 <a class="reference external" href="https://github.com/yudi-mars/Soul">Soul</a> 上获得。
+有关数据集的配置信息，请参考 <a class="reference internal" href="datasets/index.html"><span class="doc">数据集</span></a></p>
+<p>对于分布式训练的训练集，我们需要定义采样器：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;is_distributed&#39;</span><span class="p">]:</span>
+    <span class="n">train_sampler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DistributedSampler</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+    <span class="c1"># define the batch size per gpu, usually we define the numer of process equal to the number of used gpus</span>
+    <span class="n">world_size</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">get_world_size</span><span class="p">()</span>
+    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;batch_size&#39;</span><span class="p">]</span> <span class="o">//=</span> <span class="n">world_size</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">train_sampler</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>构建训练集与测试集的DataLoader：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">train_dataset</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;batch_size&#39;</span><span class="p">],</span>
+    <span class="n">shuffle</span><span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;is_distributed&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">sampler</span><span class="o">=</span><span class="n">train_sampler</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;workers&#39;</span><span class="p">],</span>
+    <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">test_dataset</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;batch_size&#39;</span><span class="p">],</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;workers&#39;</span><span class="p">],</span>
+    <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>我们还需要使用配置对象中的信息来指定训练使用的梯度代理函数及神经元类型，之后Soul将使用配置对象中的信息构建其我们需要训练的模型：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;surrogate_function&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">surrogate_map</span><span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;surrogate&#39;</span><span class="p">]]</span>
+<span class="n">config</span><span class="p">[</span><span class="s1">&#39;neuron&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">neuron_map</span><span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;neuron_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()](</span><span class="n">config</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model_map</span><span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;application&#39;</span><span class="p">]][</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()](</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>其中，您将使用的神经元 <code class="docutils literal notranslate"><span class="pre">config['neuron_type']</span></code> 及我们需要训练的模型类型 <code class="docutils literal notranslate"><span class="pre">config['model']</span></code> 可以根据 <code class="docutils literal notranslate"><span class="pre">soul.utils.parser.parse_args()</span></code> 中的对应参数被配置
+<code class="docutils literal notranslate"><span class="pre">config['surrogate']</span></code> 由您选定的神经元的特点配置 <code class="docutils literal notranslate"><span class="pre">config/neuron/*.yaml</span></code> 所决定
+<code class="docutils literal notranslate"><span class="pre">config['application']</span></code> 由我们使用的数据集自动对应，无需手动设置</p>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">soul.utils.metrics.num_params.count_parameters(model,</span> <span class="pre">trainable=False)</span></code> 方法，我们可以查看模型的参数量是多少：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">global_rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">n_parameters</span> <span class="o">=</span> <span class="n">count_parameters</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of params for model </span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">n_parameters</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> M&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>将模型传输至指定设备上（本例中优先使用GPU），若使用分布式训练，则需要使用 <code class="docutils literal notranslate"><span class="pre">torch.nn.parallel.distributed.DistributedDataParallel</span></code> 类对模型进行包装：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;is_distributed&#39;</span><span class="p">]:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">device_ids</span><span class="o">=</span><span class="p">[</span><span class="n">local_rank</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>在训练准备阶段结束之前，我们还需要初始化损失函数、优化器及训练调度器的信息：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+<span class="c1"># init optimzer</span>
+<span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;optimizer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;sgd&#39;</span><span class="p">:</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span> <span class="n">momentum</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;momentum&#39;</span><span class="p">],</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">])</span>
+<span class="k">elif</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;optimizer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;adam&#39;</span><span class="p">:</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">])</span>
+<span class="k">elif</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;optimizer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;adamw&#39;</span><span class="p">:</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">])</span>
+<span class="k">elif</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;optimizer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;rmsprop&#39;</span><span class="p">:</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">RMSprop</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">global_rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received unrecognized optimizer </span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;optimizer&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, set default Adam optimizer&quot;</span><span class="p">)</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">],</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;weight_decay&#39;</span><span class="p">])</span>
+
+<span class="c1"># init scheduler</span>
+<span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;scheduler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;cosine&#39;</span><span class="p">:</span>
+    <span class="n">scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">CosineAnnealingLR</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">T_max</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">])</span>
+<span class="k">elif</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;scheduler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
+    <span class="n">scheduler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">StepLR</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.25</span><span class="p">),</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;scheduler&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;warmup&#39;</span><span class="p">:</span>
+    <span class="n">scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">CosineAnnealingWarmRestarts</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">T_0</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">T_mult</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">global_rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received unrecognized scheduler </span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;scheduler&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, set default ConsineAnnealing Scheduler&quot;</span><span class="p">)</span>
+    <span class="n">scheduler</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">CosineAnnealingLR</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">T_max</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>本案例中以交叉熵损失作为损失函数， <code class="docutils literal notranslate"><span class="pre">config['optimizer']</span></code> 及 <code class="docutils literal notranslate"><span class="pre">config['scheduler']</span></code> 可以根据 <code class="docutils literal notranslate"><span class="pre">soul.utils.parser.parse_args()</span></code> 方法中的对应参数进行配置
+关于优化器及训练调度器的配置的更多信息，请参考 <a class="reference internal" href="params.html"><span class="doc">参数设置</span></a></p>
+</section>
+<section id="id4">
+<h2>模型训练<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">best_acc</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;epochs&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;is_distributed&#39;</span><span class="p">]:</span>
+        <span class="n">train_sampler</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+
+    <span class="n">train_top1_meter</span><span class="p">,</span> <span class="n">train_loss_meter</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(),</span> <span class="n">AverageMeter</span><span class="p">()</span>
+    <span class="c1"># customize progress bar for train loader</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;batch&#39;</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Train: &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">global_rank</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">train_loader</span>
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="n">loader</span><span class="p">:</span>
+        <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">targets</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+        <span class="c1"># default data shape (B, T, input_size) -&gt; (T, B, input_size)</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">acc1</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">topk</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="n">train_top1_meter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">acc1</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">targets</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
+        <span class="n">train_loss_meter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">targets</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
+
+    <span class="n">train_acc</span> <span class="o">=</span> <span class="n">train_top1_meter</span><span class="o">.</span><span class="n">avg</span>
+    <span class="n">train_loss</span> <span class="o">=</span> <span class="n">train_loss_meter</span><span class="o">.</span><span class="n">avg</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;is_distributed&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">dist</span><span class="o">.</span><span class="n">get_rank</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+        <span class="n">test_top1_meter</span><span class="p">,</span> <span class="n">test_loss_meter</span> <span class="o">=</span> <span class="n">AverageMeter</span><span class="p">(),</span> <span class="n">AverageMeter</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+                <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">targets</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">non_blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="c1"># default data shape (B, T, input_size) -&gt; (T, B, input_size)</span>
+                <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+                <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+                <span class="n">acc1</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">topk</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+
+                <span class="n">test_loss_meter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">targets</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
+                <span class="n">test_top1_meter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">acc1</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">targets</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span>
+
+        <span class="n">test_acc</span> <span class="o">=</span> <span class="n">test_top1_meter</span><span class="o">.</span><span class="n">avg</span>
+        <span class="n">test_loss</span> <span class="o">=</span> <span class="n">test_loss_meter</span><span class="o">.</span><span class="n">avg</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;epochs&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">] Train Loss: </span><span class="si">{</span><span class="n">train_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, Train Acc: </span><span class="si">{</span><span class="n">train_acc</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%; Test Loss: </span><span class="si">{</span><span class="n">test_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, Test Acc: </span><span class="si">{</span><span class="n">test_acc</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">test_acc</span> <span class="o">&gt;</span> <span class="n">best_acc</span><span class="p">:</span>
+            <span class="n">ensure_dir</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;model_dir&#39;</span><span class="p">])</span>
+
+            <span class="n">best_acc</span> <span class="o">=</span> <span class="n">test_acc</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Best model saved with accuracy: </span><span class="si">{</span><span class="n">best_acc</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">)</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span> <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;is_distributed&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;model_dir&#39;</span><span class="p">],</span>
+                    <span class="sa">f</span><span class="s1">&#39;best_</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;neuron_type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;dataset_name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">_T</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;time_step&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">.pt&#39;</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+    <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">AverageMeter()</span></code> 来源于 <code class="docutils literal notranslate"><span class="pre">soul.utils.metrics.AverageMeter</span></code> ，用于计算和存储训练中的结果
+<code class="docutils literal notranslate"><span class="pre">accuracy(output,</span> <span class="pre">target,</span> <span class="pre">topk=(1,))</span></code> 来源于 <code class="docutils literal notranslate"><span class="pre">soul.utils.metrics.accuracy(output,</span> <span class="pre">target,</span> <span class="pre">topk=(1,))</span></code> ，用于计算准确率
+在该案例中，代码会保存当前测试集准确率最佳的模型参数到地址 <code class="docutils literal notranslate"><span class="pre">config['model_dir']</span></code> ，可以根据 <code class="docutils literal notranslate"><span class="pre">soul.utils.parser.parse_args()</span></code> 方法中的对应参数进行配置</p>
+</section>
+<section id="id5">
+<h2>数据测量<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>在 <code class="docutils literal notranslate"><span class="pre">soul.utils.metrics</span></code> 包下，我们提供了多种测试模型性能的工具，本案例以 <code class="docutils literal notranslate"><span class="pre">soul.utils.metrics.sops</span></code> 为例，该工具用于测量理论能量消耗</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># monitor max memory footprint with the best model</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;is_distributed&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">dist</span><span class="o">.</span><span class="n">get_rank</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">best_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;model_dir&#39;</span><span class="p">],</span> <span class="sa">f</span><span class="s1">&#39;best_</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;neuron_type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;dataset_name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">.pt&#39;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The size of model parameter checkpoint file: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">best_model_path</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1024</span><span class="w"> </span><span class="o">**</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> MB&#39;</span><span class="p">)</span>
+    <span class="n">best_params</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+        <span class="n">best_model_path</span><span class="p">,</span>
+        <span class="n">map_location</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span>
+        <span class="n">weights_only</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;is_distributed&#39;</span><span class="p">]:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">best_params</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">best_params</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;current device to monitor: </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+    <span class="c1"># calculate theoretical energy cost per sample inference</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Counting FLOPs/SOPs for theoretical inference cost&#39;</span><span class="p">)</span>
+    <span class="n">ops_monitor</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">is_sop</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sop&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">test_loader</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;batch&#39;</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Count OPs: &#39;</span><span class="p">):</span>
+        <span class="c1"># default data shape (B, T, input_size) -&gt; (T, B, input_size)</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+
+    <span class="n">total_sops</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">MODULE_SOP_DICT</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">total_sops</span> <span class="o">+=</span> <span class="n">v</span>
+    <span class="n">avg_sops</span> <span class="o">=</span> <span class="n">total_sops</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span>
+
+    <span class="n">cost_per_op</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;e_ac&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;sop&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;e_mac&#39;</span><span class="p">]</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average number of </span><span class="si">{</span><span class="s1">&#39;SOPs&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;sop&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;FLOPs&#39;</span><span class="si">}</span><span class="s2"> for model </span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> inference per sample: </span><span class="si">{</span><span class="n">avg_sops</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> M&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;corresponding theoretical energy cost: </span><span class="si">{</span><span class="n">avg_sops</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cost_per_op</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mj&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">config['sop']</span></code> 、 <code class="docutils literal notranslate"><span class="pre">config['e_ac']</span></code> 、 <code class="docutils literal notranslate"><span class="pre">config['e_mac']</span></code> 分别表示是否模拟在神经形态芯片上的能量消耗、在假定的 45 纳米硬件上，累加操作运行的能耗成本/皮焦（pJ）和在假定的 45 纳米硬件上，乘法累加操作的能耗成本/皮焦（pJ）
+，这些参数可以在 <code class="docutils literal notranslate"><span class="pre">config/basic.yaml</span></code> 中被配置，更多信息请参考 <a class="reference internal" href="params.html"><span class="doc">参数设置</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="concepts.html" class="btn btn-neutral float-left" title="基本概念" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="params.html" class="btn btn-neutral float-right" title="参数设置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Tecl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
