@@ -45,3 +45,7 @@ html_static_path = ['_static']
 html_js_files = [
     'my_custom.js',
 ]
+
+html_css_files = [
+    'custom.css',
+]
